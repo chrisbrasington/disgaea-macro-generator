@@ -85,13 +85,15 @@
             string runCommand = $"\"{autoHotKey}\" \"{outputFile}\"";
 
             System.Diagnostics.Process.Start(runCommand);
-
-            
         }
 
         static void Main(string[] args)
         {
-            Generate();
+            string samplePath = "..\\..\\..\\sample\\sample4.jpg";
+
+            Recognition.RecognitionEngine engine = new Recognition.RecognitionEngine();
+
+            engine.Run(samplePath);
         }
     }
 }
