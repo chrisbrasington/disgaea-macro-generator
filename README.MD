@@ -1,6 +1,14 @@
 # disgaea 1 (or probably anything) macro generator
 
-## define commands
+Got bored. Find autohotkey useful but kinda hate writing the script. Wanted to do cool stuff like this with one button:
+
+![](.img/readme2.gif)
+
+I would rather define keywords like `ATTACK` and `ENDTURN` to map to multiple inputs and generate the script.
+
+Also had a problem with key press duration being too fast for some older games, so I got tired of writing sleep lines between UP DOWN presses.
+
+# define commands
 
 define commands within input.txt
 
@@ -40,7 +48,7 @@ and in action...
 
 ![](.img/readme1.gif)
 
-## define complex commands
+# define complex commands
 
 let's you string together repetitive tasks like..
 ```
