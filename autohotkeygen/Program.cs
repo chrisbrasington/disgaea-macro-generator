@@ -1,7 +1,20 @@
-﻿namespace Generator
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices; //required for dll import
+using System.Windows.Forms; // https://stackoverflow.com/a/70466224
+
+namespace Generator
 {
     internal class Program
     {
+        // https://stackoverflow.com/questions/15413172/capture-a-keyboard-keypress-in-the-background
+        // DLL libraries used to manage hotkeys
+        [DllImport("user32.dll")]
+        public static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vlc);
+        [DllImport("user32.dll")]
+        public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+        const int MYACTION_HOTKEY_ID = 1;
+
         public static int wait = 100;
         public static string sleepCommand = $"sleep, {wait}";
 
@@ -29,18 +42,18 @@
 
         public static void Generate()
         {
-             string output = "";
+            string output = "";
             Dictionary<string, List<string>> mappings = DefineMappings();
-         
+
             foreach (string line in File.ReadLines("..\\..\\..\\input.txt"))
             {
                 // comment
-                if(line.StartsWith(";"))
+                if (line.StartsWith(";"))
                 {
                     Console.WriteLine(line);
                     continue;
                 }
-                if(line.StartsWith("STARTCOMMAND"))
+                if (line.StartsWith("STARTCOMMAND"))
                 {
                     Console.WriteLine("START COMMAND ~~~");
                     output += line.Split("STARTCOMMAND ")[1];
@@ -86,12 +99,63 @@
 
             System.Diagnostics.Process.Start(runCommand);
 
-            
+
         }
+
+        /// <summary>
+        /// find window by name (starts with)
+        /// </summary>
+        /// <param name="windowName"></param>
+        /// <param name="handle"></param>
+        /// <returns></returns>
+        private static bool FindWindow(string windowName, out IntPtr handle)
+        {
+            foreach (Process pList in Process.GetProcesses())
+            {
+                if (pList.MainWindowTitle.ToUpper().StartsWith(windowName))
+                {
+                    // ignore this come on..
+                    if (pList.MainWindowTitle.ToLower().Contains("discord"))
+                    {
+                        continue;
+                    }
+
+                    handle = pList.MainWindowHandle;
+
+                    Console.WriteLine($"Found: {pList.MainWindowTitle}");
+                    Console.WriteLine($"Handle: {handle}");
+
+                    return true;
+                }
+            }
+            handle = IntPtr.Zero;
+            return false;
+        }
+
+
 
         static void Main(string[] args)
         {
-            Generate();
+            IntPtr gameHandle = IntPtr.Zero;
+            FindWindow("DISGAEA", out gameHandle);
+
+            RegisterHotKey(gameHandle, MYACTION_HOTKEY_ID, 6, (int)Keys.W);
+
+
+        }
+
+
+        //protected override void WndProc(ref Message m)
+        protected override void WndProc(ref System.Windows.Forms.Message m)
+        {
+            if (m.Msg == 0x0312 && m.WParam.ToInt32() == MYACTION_HOTKEY_ID)
+            {
+                // My hotkey has been typed
+
+                // Do what you want here
+                // ...
+            }
+            base.WndProc(ref m);
         }
     }
 }
