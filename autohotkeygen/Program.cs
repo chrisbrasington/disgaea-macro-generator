@@ -89,7 +89,7 @@
 
         static void Main(string[] args)
         {
-            string samplePath = "..\\..\\..\\sample\\sample4.jpg";
+            string samplePath = "..\\..\\..\\sample\\elden1.jpg";
 
             Recognition.RecognitionEngine engine = new Recognition.RecognitionEngine();
 

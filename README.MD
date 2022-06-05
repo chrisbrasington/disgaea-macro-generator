@@ -7,3 +7,5 @@ it uses an english trained dataset that isn't great for things like "Lv" "Hp" "S
 ![](.img/tess2.png)
 
 ![](.img/tess3.png)
+
+![](.img/tess4.png)
