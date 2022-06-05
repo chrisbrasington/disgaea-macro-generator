@@ -27,9 +27,9 @@
             output += $"{sleepCommand}\n";
         }
 
-        static void Main(string[] args)
+        public static void Generate()
         {
-            string output = "";
+             string output = "";
             Dictionary<string, List<string>> mappings = DefineMappings();
          
             foreach (string line in File.ReadLines("..\\..\\..\\input.txt"))
@@ -85,6 +85,13 @@
             string runCommand = $"\"{autoHotKey}\" \"{outputFile}\"";
 
             System.Diagnostics.Process.Start(runCommand);
+
+            
+        }
+
+        static void Main(string[] args)
+        {
+            Generate();
         }
     }
 }
