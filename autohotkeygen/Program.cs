@@ -13,6 +13,7 @@
             mappings.Add("LEFT", new List<string>() { "A" });
             mappings.Add("RIGHT", new List<string>() { "D" });
             mappings.Add("ATTACK", new List<string>() { "ENTER", "S", "ENTER", "ENTER" });
+            mappings.Add("ATTACK2", new List<string>() { "ENTER", "S", "ENTER", "S", "ENTER" });
             mappings.Add("ENDTURN", new List<string>() { "I", "S", "ENTER", "ENTER" });
 
             return mappings;
